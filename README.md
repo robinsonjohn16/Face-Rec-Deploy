@@ -42,11 +42,18 @@ py -m venv .venv
 -  Create `.env` file and add follwing fields
 
 ```
-DATABASE_URL=""
-DATABASE_NAME=""
-secret_key=''
-admin_username = ""
-admin_password = ""
+DATABASE_URL = ""
+DATABASE_NAME="face_recognition"
+SECRET_KEY =""
+ADMIN_USERNAME = ""
+ADMIN_PASSWORD = ""
+CLOUD_NAME = ""
+API_KEY = ""
+API_SECRET = ""
+SUBMIT_ID = ""
+SUBMIT_PASSWORD = ""
+SMTP_EMAIL_ID = ""
+SMTP_EMAIL_PASSWORD = ""
 ```
 
 -  Turn up the server
