@@ -1,9 +1,7 @@
-from flask import Flask, render_template, session, redirect
+from flask import flash, render_template, session, redirect
 from app import app
 from functools import wraps
 from myModels import *
-
-# from recognitionProcess import *
 
 
 # Decorators
@@ -13,6 +11,7 @@ def login_required(f):
         if "logged_in" in session:
             return f(*args, **kwargs)
         else:
+            flash("Please login to access this page.", "error")
             return redirect("/")
 
     return wrap
@@ -155,15 +154,16 @@ def userMonth():
     return User().checkAttendance()
 
 
-# @app.route("/user/edit", methods=['POST', "GET"])
+# @app.route("/user/edit", methods=["POST", "GET"])
 # @login_required
 # def userEdit():
-#   return render_template("edit.html")
+#     return render_template("edit.html")
 
-# @app.route("/user/editCheck", methods=['POST'])
+
+# @app.route("/user/editCheck", methods=["POST"])
 # @login_required
 # def userEditDef():
-#   return User().edit()
+#     return User().edit()
 
 
 @app.route("/user/attendance", methods=["GET"])

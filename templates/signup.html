@@ -5,6 +5,11 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <title>AttenEase | Auth</title>
       <link
+         rel="icon"
+         type="image/png"
+         href="{{ url_for('static', filename = 'assets/face-recognition.png') }}"
+      />
+      <link
          rel="stylesheet"
          href="{{ url_for('static', filename = 'Stylesheets/signup.css') }}"
       />
@@ -25,11 +30,7 @@
                <label class="btn cancel" for="check"
                   ><i class="fas fa-times"></i
                ></label>
-               <li><a href="#">Home</a></li>
-               <li><a href="#">About</a></li>
-               <li><a href="#">Services</a></li>
-               <li><a href="#">Contact</a></li>
-               <li><a href="#">Feedback</a></li>
+               <!-- <li><a href="#">Home</a></li> -->
             </ul>
             <label for="check" class="btn bars"
                ><i class="fas fa-bars"></i
@@ -47,13 +48,31 @@
             >
                <div class="form-left">
                   <label for="name">Name</label>
-                  <input type="text" name="name" class="field" required />
+                  <input
+                     type="text"
+                     name="name"
+                     class="field"
+                     required
+                     placeholder="Enter your Name"
+                  />
 
                   <label for="roll">Roll Number</label>
-                  <input type="roll" name="roll" class="field" required />
+                  <input
+                     type="roll"
+                     name="roll"
+                     class="field"
+                     required
+                     placeholder="eg. TIT2324042"
+                  />
 
                   <label for="pmail">Parent Mail id</label>
-                  <input type="email" name="pmail" class="field" required />
+                  <input
+                     type="email"
+                     name="pmail"
+                     class="field"
+                     required
+                     placeholder="Enter your Parent Email"
+                  />
 
                   <label for="imagefile">Profile Image</label>
                   <input name="imagefile" type="file" />
@@ -72,7 +91,13 @@
                      </select>
                   </div>
                   <label for="email">Email</label>
-                  <input type="email" name="email" class="field" required />
+                  <input
+                     type="email"
+                     name="email"
+                     class="field"
+                     required
+                     placeholder="Enter your Parent Email"
+                  />
 
                   <label for="password">Password</label>
                   <input
@@ -80,6 +105,7 @@
                      name="password"
                      class="field"
                      required
+                     placeholder="Enter Password"
                   />
                   <label for="Re-password">Re-enter Password</label>
                   <input
@@ -87,6 +113,7 @@
                      name="Re-password"
                      class="field"
                      required
+                     placeholder="Re-enter Password"
                   />
                   <!-- <input type="submit" value="Sign Up" classs="btn" /> -->
                </div>

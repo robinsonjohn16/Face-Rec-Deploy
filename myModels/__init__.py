@@ -34,7 +34,7 @@ class User:
         return jsonify(user), 200
 
     def signup(self):
-        db = client.user_login_system
+        db = client.student
         print(request.form)
         print(request.files)
 
@@ -64,7 +64,13 @@ class User:
                         api_secret=os.getenv("API_SECRET"),
                     )
                     cloudinary_res = cloudinary.uploader.upload(
-                        os.path.join(app.config["UPLOAD_FOLDER"], filename)
+                        os.path.join(app.config["UPLOAD_FOLDER"], filename),
+                        unique_filename=True,
+                        crop="fill",
+                        width=400,
+                        height=400,
+                        gravity="auto",
+                        quality="auto:good",
                     )
                     print("url", cloudinary_res["url"])
                 except Exception as e:
@@ -137,7 +143,7 @@ class User:
         return redirect("/")
 
     def login(self):
-        db = client.user_login_system
+        db = client.student
         user = db.users.find_one({"email": request.form.get("email")})
 
         if user and pbkdf2_sha256.verify(
@@ -151,7 +157,7 @@ class User:
         # user = db.users.find_one({"email": session['user'].mail})
         # if(False):
         # current_month = now.strftime("%B")
-        db = client.user_login_system
+        db = client.student
         roll = request.form.get("roll")
         user = db.users.find_one({"roll": roll})
         month = request.form["selectMonth"]
@@ -280,11 +286,8 @@ SIES College of Arts, Science and Commerce. Sion(West)
                 idealAttendanceForSubject = collectionIdeal.find(
                     {"_id": subject}, {"_id": 0, "attendance": 1}
                 )
-                # print(idealAttendanceForSubject)
                 for i in idealAttendanceForSubject:
                     idealAttendance = idealAttendance + i["attendance"]
-                    # print("i", i["attendance"])
-            # print("Ideal Total", idealAttendance)
 
             for rollNum in list2:
                 total = 0
@@ -301,10 +304,7 @@ SIES College of Arts, Science and Commerce. Sion(West)
                 final_percentage = (total / idealAttendance) * 100
                 final_percentage = round(final_percentage, 2)
                 final_percentage = round(final_percentage, 2)
-                # print(rollNum, final_percentage)
                 rollNumList.append(rollNum)
-                # session("rollNum")
-                # session("final_percentage")
                 percentageList.append(final_percentage)
 
                 final_def[rollNum] = final_percentage
@@ -324,7 +324,7 @@ SIES College of Arts, Science and Commerce. Sion(West)
         if not data:
             return jsonify({"error": "Data didn't Reached Backend"}), 400
         for i, j in dict(session["defaulters"]).items():
-            if j > data:
+            if j < data:
                 tempDict[i] = j
                 print(j)
             else:
@@ -339,14 +339,15 @@ SIES College of Arts, Science and Commerce. Sion(West)
         # parentMailList = []
         for roll in session["updatedDefaulters"].keys():
             print(roll)
-            db = client.user_login_system
+            db = client.student
             dbUser = db.users.find_one({"roll": roll})
             if dbUser is None or dbUser["parentMail"] is None:
-                return jsonify(
-                    {
-                        "error": f"Roll Number : {roll} Haven't Provided their Parent Mail id"
-                    }
-                )
+                continue
+                # return jsonify(
+                # {
+                # "error": f"Roll Number : {roll} Haven't Provided their Parent Mail id"
+                # }
+                # )
             # if not dbUser["parentMail"]:
             # continue
             # print("i", dbUser["parentMail"])
@@ -428,7 +429,7 @@ class FaceRecDetails:
             secondList.append(j)
         finalRollName = {}
         temp = 0
-        best_match_condition = 0.53
+        best_match_condition = 0.55
         result_roll_list = list(firstEncodingList.keys())
         try:
             response_data = {"message": "Face Not Detected"}
@@ -484,62 +485,69 @@ class FaceRecDetails:
             return jsonify({"error": "Name and Password is required"}), 400
 
         if name == os.getenv("SUBMIT_ID") and password == os.getenv("SUBMIT_PASSWORD"):
-            return jsonify({"error": "Credentials are not correct"}), 401
-        try:
-            detecDist = session["DetectedList"]
-            now = datetime.now()
-            current_month = now.strftime("%B")
-            dbName = f"{session['year']}-{current_month}"
+            try:
+                detecDist = session["DetectedList"]
+                now = datetime.now()
+                current_month = now.strftime("%B")
+                dbName = f"{session['year']}-{current_month}"
 
-            db = client[dbName]
+                db = client[dbName]
 
-            # * Making perfect attendance Collection
-            idealCollection = db["idealCollection"]
-            print("collection is working")
-            idealAttendance = idealCollection.find(
-                {"_id": session["selectedSubject"]}, {"attendance": 1, "_id": 0}
-            )
-            newLectureNum = int(session["lectureNum"])
-            print("Before for loop")
-
-            for ideal in idealAttendance:
-                newLectureNum = ideal["attendance"] + int(session["lectureNum"])
-
-            idealCollection.update_one(
-                {"_id": session["selectedSubject"]},
-                {
-                    "$set": {
-                        "attendance": int(newLectureNum),
-                        "currentMonth": current_month,
-                    }
-                },
-                upsert=True,
-            )
-            myCollection = db[session["selectedSubject"]]
-
-            for rollNum, name in zip(detecDist.keys(), detecDist.values()):
-                print(rollNum, name)
-                newAtt = myCollection.find(
-                    {"_id": rollNum}, {"attendance": 1, "_id": 0}
+                # * Making perfect attendance Collection
+                idealCollection = db["idealCollection"]
+                print("collection is working")
+                idealAttendance = idealCollection.find(
+                    {"_id": session["selectedSubject"]}, {"attendance": 1, "_id": 0}
                 )
-                lectureNumTemp = int(session["lectureNum"])
-                for i in newAtt:
-                    print(i)
-                    lectureNumTemp = i["attendance"] + int(session["lectureNum"])
+                newLectureNum = int(session["lectureNum"])
+                print("Before for loop")
 
-                myCollection.update_one(
-                    {"_id": rollNum},
+                for ideal in idealAttendance:
+                    newLectureNum = ideal["attendance"] + int(session["lectureNum"])
+
+                idealCollection.update_one(
+                    {"_id": session["selectedSubject"]},
                     {
                         "$set": {
-                            "name": name,
-                            "attendance": int(lectureNumTemp),
+                            "attendance": int(newLectureNum),
                             "currentMonth": current_month,
                         }
                     },
                     upsert=True,
                 )
-            self.end_session("DetectedList")
-            return jsonify({"message": "Successfully Submitted to the database"}), 200
-        except Exception as e:
-            print(e)
-            return jsonify({"message": "Database Submit Issue, Try Again later"}), 200
+                myCollection = db[session["selectedSubject"]]
+
+                for rollNum, name in zip(detecDist.keys(), detecDist.values()):
+                    print(rollNum, name)
+                    newAtt = myCollection.find(
+                        {"_id": rollNum}, {"attendance": 1, "_id": 0}
+                    )
+                    lectureNumTemp = int(session["lectureNum"])
+                    for i in newAtt:
+                        print(i)
+                        lectureNumTemp = i["attendance"] + int(session["lectureNum"])
+
+                    myCollection.update_one(
+                        {"_id": rollNum},
+                        {
+                            "$set": {
+                                "name": name,
+                                "attendance": int(lectureNumTemp),
+                                "currentMonth": current_month,
+                            }
+                        },
+                        upsert=True,
+                    )
+                self.end_session("DetectedList")
+                return (
+                    jsonify({"message": "Successfully Submitted to the database"}),
+                    200,
+                )
+            except Exception as e:
+                print(e)
+                return (
+                    jsonify({"message": "Database Submit Issue, Try Again later"}),
+                    200,
+                )
+        else:
+            return jsonify({"error": "Credentials are not correct"}), 401

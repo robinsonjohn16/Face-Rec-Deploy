@@ -41,10 +41,10 @@ main {
 .leftDashboard h1 {
    font-weight: 600;
    margin-left: 3em;
+   /* display: flex;
+   flex-direction: column; */
    line-height: 1.6em;
-   font-size: 2.7em;
-   /* margin: 2em 0em 0em 1em; */
-   /* color: #9f7a8d; */
+   font-size: 3.3em;
 }
 
 .leftDashboard p {
@@ -53,12 +53,40 @@ main {
    margin-top: 1em;
    line-height: 2em;
    color: #5f5f5f;
-   margin-left: 6em;
+   margin-left: 7em;
 }
 
+.typed-out {
+   overflow: hidden;
+   display: table-caption;
+
+   font-weight: 600;
+   line-height: 1.6em;
+   color: #d4a2b0;
+   border-right: 0.15em solid #dcb7c2;
+   white-space: nowrap;
+   animation: typing 1s steps(20, end) forwards, blinking 0.8s infinite;
+   width: 0;
+}
+@keyframes blinking {
+   from {
+      border-color: transparent;
+   }
+   to {
+      border-color: #dcb7c2;
+   }
+}
+@keyframes typing {
+   from {
+      width: 0;
+   }
+   to {
+      width: 100%;
+   }
+}
 .leftDashboard button {
    /* margin: 6em 0em 0em 3em; */
-   margin-left: 6em;
+   margin-left: 8em;
    margin-top: 3em;
    padding: 0.7em 1.1em;
    border: none;

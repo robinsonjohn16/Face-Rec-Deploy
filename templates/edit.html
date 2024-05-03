@@ -3,78 +3,123 @@
    <head>
       <meta charset="UTF-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <title>AtendEase | Edit</title>
-      <!-- Font Awesome -->
-      <script
-         src="https://kit.fontawesome.com/23ffd4fbcb.js"
-         crossorigin="anonymous"
-      ></script>
-
+      <title>AttenEase | Auth</title>
+      <link
+         rel="icon"
+         type="image/png"
+         href="{{ url_for('static', filename = 'assets/face-recognition.png') }}"
+      />
+      <link
+         rel="stylesheet"
+         href="{{ url_for('static', filename = 'Stylesheets/signup.css') }}"
+      />
+      <!-- <link rel="stylesheet" href="../static/Stylesheets/home.css" /> -->
       <link rel="preconnect" href="https://fonts.googleapis.com" />
       <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-
       <link
          href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
          rel="stylesheet"
       />
-
-      <link rel="stylesheet" href="../static/Stylesheets/edit.css" />
-      <link rel="stylesheet" href="../static/Stylesheets/nav.css" />
    </head>
    <body>
       <nav>
          <div class="menu">
-            <!-- <input type="checkbox" id="check1" />s -->
-            <div class="logo">
-               <a href="#">AttendEase</a>
-            </div>
+            <input type="checkbox" id="check" />
+            <div class="logo"><a href="#">AttendEase</a></div>
+            <ul>
+               <label class="btn cancel" for="check"
+                  ><i class="fas fa-times"></i
+               ></label>
+               <!-- <li><a href="#">Home</a></li> -->
+            </ul>
+            <label for="check" class="btn bars"
+               ><i class="fas fa-bars"></i
+            ></label>
+            <!-- </div> -->
          </div>
       </nav>
-      <label class="button bars" for="check">
-         <i class="fas fa-bars"></i>
-      </label>
-      <input type="checkbox" aria-checked="" id="check" />
-      <div class="side_bar">
-         <ul class="ulList">
-            <div>
-               <img src="{{session['user']['profile']}}" alt="Profile" />
-            </div>
-            <div class="liDiv">
-               <p>{{ session['user']['name'] or Username}}</p>
+      <h2>Register Yourself</h2>
+      <div class="hero">
+         <div class="left-div">
+            <form
+               id="sign-up-id"
+               name="signup_form"
+               enctype="multipart/form-data"
+            >
+               <div class="form-left">
+                  <label for="name">Name</label>
+                  <input type="text" name="name" class="field" required />
+
+                  <label for="roll">Roll Number</label>
+                  <input type="roll" name="roll" class="field" required />
+
+                  <label for="pmail">Parent Mail id</label>
+                  <input type="email" name="pmail" class="field" required />
+
+                  <label for="imagefile">Profile Image</label>
+                  <input name="imagefile" type="file" />
+
+                  <!-- <label for="year">Year</label>
+            <input type="year" name="year" class="field" required /> -->
+               </div>
+               <div class="form-right">
+                  <div class="yearSelect">
+                     <label for="selectOption">Year</label>
+                     <select name="selectOption">
+                        <option selected>Select The Year</option>
+                        <option value="FY-IT" name="Fy">FY-IT</option>
+                        <option value="SY-IT" name="Sy">SY-IT</option>
+                        <option value="TY-IT" name="Ty">TY-IT</option>
+                     </select>
+                  </div>
+                  <label for="email">Email</label>
+                  <input type="email" name="email" class="field" required />
+
+                  <label for="password">Password</label>
+                  <input
+                     type="password"
+                     name="password"
+                     class="field"
+                     required
+                  />
+                  <label for="Re-password">Re-enter Password</label>
+                  <input
+                     type="password"
+                     name="Re-password"
+                     class="field"
+                     required
+                  />
+                  <!-- <input type="submit" value="Sign Up" classs="btn" /> -->
+               </div>
                <br />
-               <div>{{session['user']['roll'] or RollNumber}}</div>
-            </div>
-            <li>
-               <a href="/dashboard"
-                  ><i class="fa fa-columns"></i>&nbsp;&nbsp;Dashboard</a
-               >
-            </li>
-            <li>
-               <a href="/user/select/"
-                  ><i class="fa fa-users"></i>&nbsp;&nbsp;Attendance</a
-               >
-            </li>
-            <li>
-               <a href="#"
-                  ><i class="fa fa-pen-to-square"></i>&nbsp;&nbsp;Edit
-                  Profile</a
-               >
-            </li>
-            <li>
-               <a href="/user/signout"
-                  ><i class="fa-solid fa-right-from-bracket"></i
-                  >&nbsp;&nbsp;Logout</a
-               >
-            </li>
-            <div>
-               <label class="button cancel" for="check"
-                  ><i class="fas fa-times"></i>
-               </label>
-            </div>
-         </ul>
+
+               <div class="form-bottom">
+                  <h3 class="error error--hidden"></h3>
+                  <div class="btn-div">
+                     <button type="submit" class="btn">Sign UP</button>
+                  </div>
+                  <div class="otherOptions">
+                     <a href="/login">Already Have an Account? Login Instead</a>
+                     <a href="/admin">Admin?</a>
+                  </div>
+               </div>
+            </form>
+         </div>
+         <div class="right-div">
+            <img
+               class="normal-img"
+               src="../static/assets/3d-casual.png"
+               alt="Illustration"
+            />
+            <img
+               style="display: none"
+               class="error-img"
+               src="../static/assets/error-img-signup.png"
+               alt="Illustration"
+            />
+         </div>
       </div>
    </body>
-
    <script src="{{ url_for('static', filename='./Javascript/jquery.js') }}"></script>
-   <script src="{{ url_for('static', filename='./Javascript/edit.js') }}"></script>
+   <script src="{{ url_for('static', filename='./Javascript/signup.js') }}"></script>
 </html>

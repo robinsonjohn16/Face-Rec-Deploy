@@ -3,7 +3,12 @@
    <head>
       <meta charset="UTF-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <title>Document</title>
+      <title>AttendEase</title>
+      <link
+         rel="icon"
+         type="image/png"
+         href="../static/assets/face-recognition.png"
+      />
       <!-- Font Awesome -->
       <script
          src="https://kit.fontawesome.com/23ffd4fbcb.js"
@@ -18,9 +23,30 @@
          rel="stylesheet"
       />
 
-      <link rel="stylesheet" href="../static/Stylesheets/index.css" />
       <link rel="stylesheet" href="../static/Stylesheets/nav.css" />
+      <link rel="stylesheet" href="../static/Stylesheets/index.css" />
    </head>
+   <script>
+      window.onload = function () {
+         // typeWriter();
+         var flashMessage =
+            "{{ get_flashed_messages()[0] if get_flashed_messages() else '' }}";
+         if (flashMessage !== "") {
+            alert(flashMessage);
+         }
+      };
+      // function typeWriter() {
+      //    let i = 0;
+      //    let txt = ;
+      //    let speed = 50;
+      //    if (i < txt.length) {
+      //       console.log("Hello1");
+      //       document.querySelector(".span").innerHTML += txt.charAt(i);
+      //       i++;
+      //       setTimeout(typeWriter, speed);
+      //    }
+      // }
+   </script>
    <body>
       <nav>
          <div class="menu">
@@ -34,7 +60,7 @@
          <div class="login authBtn"><a href="/login">Log In</a></div>
          <div class="admin authBtn"><a href="/admin">Admin</a></div>
       </nav>
-      {% else %}
+      {{code}} {% else %}
       <label class="button bars" for="check">
          <i class="fas fa-bars"></i>
       </label>
@@ -83,8 +109,9 @@
       <main>
          <div class="leftDashboard">
             <h1>
-               Revolutionizing Attendance Management with Intelligent Face
-               Recognition
+               Revolutionizing Attendance Management with
+               <br />
+               <div class="typed-out">"Face Recognition"</div>
             </h1>
             <p>
                Experience the ease of attendance management with AttenEase. Our

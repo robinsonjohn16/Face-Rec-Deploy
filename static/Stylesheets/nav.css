@@ -100,11 +100,11 @@ nav label.btn {
    cursor: pointer;
    display: none;
 }
-nav label.cancel {
+/* nav label.cancel {
    position: absolute;
    top: 25px;
    right: 30px;
-}
+} */
 #check1 {
    display: none;
 }
@@ -315,13 +315,20 @@ li a:hover {
    height: 8em;
    border-radius: 50%;
 }
-
+.liDiv {
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   flex-direction: column;
+   gap: -1em;
+}
 .liDiv p {
    font-size: 2em;
    font-weight: 500;
 }
 .liDiv div {
-   margin-left: 4em;
+   /* margin-left: 4em; */
+   font-size: 1.4em;
 }
 
 li a {

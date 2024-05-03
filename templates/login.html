@@ -4,7 +4,11 @@
       <meta charset="UTF-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <title>AttenEase | Login</title>
-
+      <link
+         rel="icon"
+         type="image/png"
+         href="../static/assets/face-recognition.png"
+      />
       <link
          rel="stylesheet"
          href="{{ url_for('static', filename = 'Stylesheets/login.css') }}"
@@ -25,10 +29,10 @@
                <label class="btn cancel" for="check"
                   ><i class="fas fa-times"></i
                ></label>
-               <li><a href="#">Home</a></li>
+               <!-- <li><a href="#">Home</a></li>
                <li><a href="#">About</a></li>
                <li><a href="#">Services</a></li>
-               <li><a href="#">Contact</a></li>
+               <li><a href="#">Contact</a></li> -->
                <!-- <li><a href="#">Feedback</a></li> -->
             </ul>
             <label for="check" class="btn bars"
@@ -44,7 +48,13 @@
             <form name="login_form">
                <div>
                   <label for="email">Email</label>
-                  <input type="email" name="email" class="field" required />
+                  <input
+                     type="email"
+                     name="email"
+                     class="field"
+                     required
+                     placeholder="Enter your Email"
+                  />
                </div>
                <div>
                   <label for="password">Password</label>
@@ -53,6 +63,7 @@
                      name="password"
                      class="field"
                      required
+                     placeholder="Enter your password"
                   />
                </div>
                <h5 class="error error--hidden"></h5>
